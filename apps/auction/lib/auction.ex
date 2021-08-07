@@ -1,8 +1,9 @@
 defmodule Auction do                # public interface to access database
-  alias Auction.{Item, FakeRepo}    # multiple Alias in one line
+  #alias Auction.{Item, FakeRepo}    # multiple Alias in one line
+  #@repo FakeRepo                    # denoting FaekRepo as a Module Attribute
 
-  @repo FakeRepo                    # denoting FaekRepo as a Module Attribute
-
+  alias Auction.Item
+  @repo Auction.Repo
   def list_items do
     @repo.all(Item)                 # call FakeRepo Module Passing Item as first argument
                                     # It lets the database know which table(set of data) you are requesting
@@ -16,4 +17,16 @@ defmodule Auction do                # public interface to access database
   def get_item_by(attrs) do
     @repo.get_by(Item, attrs)
   end
+
+  def insert_item(attrs) do
+    Auction.Item
+    |> struct(attrs)  # convert map to struct
+    |> @repo.insert()
+    end
+
+  def delete_item(%Auction.Item{} = item), do: @repo.delete(item)
+
 end
+
+# usage example
+# Auction.insert_item( %{title: "PS4", description: "costly", ends_at: DateTime.from_naive!(~N[2020-02-02 00:00:00], "Etc/UTC")} )

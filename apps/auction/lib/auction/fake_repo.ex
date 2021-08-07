@@ -7,7 +7,6 @@ defmodule Auction.FakeRepo do
     %Item{id: 2, title: "PS2",      description: "play station 2",     ends_at: ~N[2021-12-13 00:00:00]},
     %Item{id: 3, title: "Gameboy",  description: "Nintendo hand held", ends_at: ~N[2021-12-14 00:00:00]}
   ]
-
   def all(Item), do: @items # returns the whole database
 
   def get!(Item, id) do
