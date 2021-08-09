@@ -26,7 +26,15 @@ defmodule Auction do                # public interface to access database
 
   def delete_item(%Auction.Item{} = item), do: @repo.delete(item)
 
+  def update_item(change_of_item) do
+    @repo.update!(change_of_item)
+  end
+
 end
 
 # usage example
 # Auction.insert_item( %{title: "PS4", description: "costly", ends_at: DateTime.from_naive!(~N[2020-02-02 00:00:00], "Etc/UTC")} )
+# first_item = Auction.list_items() |> Enum.at(0)
+# item_0_as_changeset = Auction.Item.changeset(first_item, %{title: "PS5"})
+# Auction.update_item(item_0_as_changeset)
+# Auction.list_items()
