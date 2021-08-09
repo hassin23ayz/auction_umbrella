@@ -26,8 +26,11 @@ defmodule Auction do                # public interface to access database
 
   def delete_item(%Auction.Item{} = item), do: @repo.delete(item)
 
-  def update_item(change_of_item) do
-    @repo.update!(change_of_item)
+  # Pattern-matches on the first parameter to ensure that you’re actually receiving an Auction.Item struct
+  def update_item( %Auction.Item{} = item, change_of_item) do
+    item
+    |> Item.changeset(change_of_item)
+    |> @repo.update!()
   end
 
 end
