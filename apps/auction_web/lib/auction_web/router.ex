@@ -1,3 +1,6 @@
+#: responsible for dispatching verb/path to controllers
+#: allows us to scope functionality, e.g some pages may require authentication
+
 defmodule AuctionWeb.Router do
   use AuctionWeb, :router
 
@@ -13,10 +16,27 @@ defmodule AuctionWeb.Router do
     plug :accepts, ["json"]
   end
 
+  #: this grp of routes will attempt to match all routes beginning with /
   scope "/", AuctionWeb do
-    pipe_through :browser
+    pipe_through :browser #: handles some house keeping for all common browser style requests
 
+    #: from endpoint.ex we have come here , Adding a new Route
+    #: HTTP requests [verb/path] matching happens here
+    #: HTTP_method   Route,  Controller_module   Handler_CRUD_action_functions list
     get "/", PageController, :index
+
+    # get    "/items",          ItemController, :index
+    # get    "/items/new",      ItemController, :new
+    # post   "/items",          ItemController, :create
+    # get    "/items/:id",      ItemController, :show
+    # get    "/items/:id/edit", ItemController, :edit
+    # patch  "/items/:id",      ItemController, :update
+    # put    "/items/:id",      ItemController, :update
+    # delete "/items/:id",      ItemController, :delete
+
+    # All the boilerplate from above is created by the following line
+    resources "/items", ItemController, only: [:index, :show]
+
   end
 
   # Other scopes may use custom stacks.
