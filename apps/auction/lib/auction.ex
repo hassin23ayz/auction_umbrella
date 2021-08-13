@@ -19,8 +19,8 @@ defmodule Auction do                # public interface to access database
   end
 
   def insert_item(attrs) do
-    Auction.Item
-    |> struct(attrs)  # convert map to struct
+    %Item{}
+    |> Item.changeset(attrs)
     |> @repo.insert()
     end
 
@@ -33,11 +33,14 @@ defmodule Auction do                # public interface to access database
     |> @repo.update!()
   end
 
+  def new_item() do
+    Item.changeset( %Item{} )
+  end
+
 end
 
 # usage example
 # Auction.insert_item( %{title: "PS4", description: "costly", ends_at: DateTime.from_naive!(~N[2020-02-02 00:00:00], "Etc/UTC")} )
 # first_item = Auction.list_items() |> Enum.at(0)
-# item_0_as_changeset = Auction.Item.changeset(first_item, %{title: "PS5"})
-# Auction.update_item(item_0_as_changeset)
+# Auction.update_item(first_item, %{title: "PS5"})
 # Auction.list_items()

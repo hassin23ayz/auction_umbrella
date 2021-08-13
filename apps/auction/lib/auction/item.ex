@@ -18,6 +18,7 @@ defmodule Auction.Item do
 
   # arg1: item : the structure type data that need/has changes , is to be validated by changeset
   # arg2: params \\ %{} : a map off attributes to update with the default being an empty map
+  #                     : \\ is used to define default params
   def changeset(item, params \\ %{}) do
     item
     |> cast(params, [:title, :description, :ends_at]) # cast checks passed params with the keys in the List

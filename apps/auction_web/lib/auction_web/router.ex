@@ -35,7 +35,12 @@ defmodule AuctionWeb.Router do
     # delete "/items/:id",      ItemController, :delete
 
     # All the boilerplate from above is created by the following line
-    resources "/items", ItemController, only: [:index, :show]
+    resources "/items", ItemController, only: [
+      :index, # url usage http://localhost:4000/items/
+      :show,  # [is called from :index :create]
+      :new,   # url usage http://localhost:4000/items/new
+      :create # [is called from :new]
+    ]
 
   end
 
