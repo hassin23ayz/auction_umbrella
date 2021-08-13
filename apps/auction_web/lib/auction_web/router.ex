@@ -36,10 +36,12 @@ defmodule AuctionWeb.Router do
 
     # All the boilerplate from above is created by the following line
     resources "/items", ItemController, only: [
-      :index, # url usage http://localhost:4000/items/
-      :show,  # [is called from :index :create]
-      :new,   # url usage http://localhost:4000/items/new
-      :create # [is called from :new]
+      :index,  # url usage http://localhost:4000/items/
+      :show,   # [is called from :index :create]
+      :new,    # url usage http://localhost:4000/items/new
+      :create, # [is called from :new]
+      :edit,   # url usage http://localhost:4000/items/3/edit
+      :update  # [is called from :edit]
     ]
 
   end

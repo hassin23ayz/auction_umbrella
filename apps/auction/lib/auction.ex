@@ -2,7 +2,8 @@ defmodule Auction do                # public interface to access database
   #alias Auction.{Item, FakeRepo}    # multiple Alias in one line
   #@repo FakeRepo                    # denoting FaekRepo as a Module Attribute
 
-  alias Auction.Item
+  # alias Auction.Item
+  alias Auction.{Item}
   @repo Auction.Repo
   def list_items do
     @repo.all(Item)                 # call FakeRepo Module Passing Item as first argument
@@ -27,14 +28,19 @@ defmodule Auction do                # public interface to access database
   def delete_item(%Auction.Item{} = item), do: @repo.delete(item)
 
   # Pattern-matches on the first parameter to ensure that you’re actually receiving an Auction.Item struct
-  def update_item( %Auction.Item{} = item, change_of_item) do
+  def update_item( %Auction.Item{} = item, updates) do
     item
-    |> Item.changeset(change_of_item)
-    |> @repo.update!()
+    |> Item.changeset(updates)
+    |> @repo.update()
   end
 
   def new_item() do
     Item.changeset( %Item{} )
+  end
+
+  def edit_item(id) do
+    get_item(id)
+    |> Item.changeset()
   end
 
 end
