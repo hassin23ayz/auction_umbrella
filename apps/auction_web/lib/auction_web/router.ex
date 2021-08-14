@@ -44,6 +44,12 @@ defmodule AuctionWeb.Router do
       :update  # [is called from :edit]
     ]
 
+    resources "/users", UserController, only: [
+      :new,    # url usage http://localhost:4000/users/new      [1]
+      :create, # is called from :new (new.html.eex)             [2]
+      :show    # is called from :create (user_controller.ex)    [3]
+    ]
+
   end
 
   # Other scopes may use custom stacks.

@@ -1,14 +1,15 @@
-defmodule Auction do                # public interface to access database
-  #alias Auction.{Item, FakeRepo}    # multiple Alias in one line
-  #@repo FakeRepo                    # denoting FaekRepo as a Module Attribute
+# public interface to access database
+defmodule Auction do
+  # alias Auction.{Item, FakeRepo}    # multiple Alias in one line
+  # @repo FakeRepo                    # denoting FaekRepo as a Module Attribute
 
-  # alias Auction.Item
-  alias Auction.{Item}
+  alias Auction.{Item, User}
   @repo Auction.Repo
   def list_items do
-    @repo.all(Item)                 # call FakeRepo Module Passing Item as first argument
-                                    # It lets the database know which table(set of data) you are requesting
-                                    # Item is here like telling more of a type
+    # call FakeRepo Module Passing Item as first argument
+    @repo.all(Item)
+    # It lets the database know which table(set of data) you are requesting
+    # Item is here like telling more of a type
   end
 
   def get_item(id) do
@@ -23,19 +24,19 @@ defmodule Auction do                # public interface to access database
     %Item{}
     |> Item.changeset(attrs)
     |> @repo.insert()
-    end
+  end
 
   def delete_item(%Auction.Item{} = item), do: @repo.delete(item)
 
   # Pattern-matches on the first parameter to ensure that you’re actually receiving an Auction.Item struct
-  def update_item( %Auction.Item{} = item, updates) do
+  def update_item(%Auction.Item{} = item, updates) do
     item
     |> Item.changeset(updates)
     |> @repo.update()
   end
 
   def new_item() do
-    Item.changeset( %Item{} )
+    Item.changeset(%Item{})
   end
 
   def edit_item(id) do
@@ -43,6 +44,15 @@ defmodule Auction do                # public interface to access database
     |> Item.changeset()
   end
 
+  # user section
+  def get_user(id), do: @repo.get!(User, id)
+  def new_user, do: User.changeset_with_password(%User{})
+
+  def insert_user(params) do
+    %User{}
+    |> User.changeset_with_password(params)
+    |> @repo.insert
+  end
 end
 
 # usage example
