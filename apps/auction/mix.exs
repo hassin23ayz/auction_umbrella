@@ -31,7 +31,9 @@ defmodule Auction.MixProject do
       # {:sibling_app_in_umbrella, in_umbrella: true}
       {:ecto_sql, "~> 3.6.0"},
       {:postgrex, "~> 0.15.0"},
-      {:uuid, "~> 1.1.8"}
+      {:uuid, "~> 1.1.8"},
+      {:comeonin, "~> 5.3.0"},
+      {:pbkdf2_elixir, "~> 1.4.0"}
     ]
   end
 end
