@@ -6,7 +6,7 @@ defmodule AuctionWeb.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
-    plug :fetch_session
+    plug :fetch_session         # session can be read from / written to
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
@@ -49,6 +49,11 @@ defmodule AuctionWeb.Router do
       :create, # is called from :new (new.html.eex)             [2]
       :show    # is called from :create (user_controller.ex)    [3]
     ]
+
+    # user session related
+    get    "/login",  SessionController, :new     # url usage http://localhost:4000/login
+    post   "/login",  SessionController, :create  # is called from :new (new.html.eex)
+    delete "/logout", SessionController, :delete
 
   end
 
