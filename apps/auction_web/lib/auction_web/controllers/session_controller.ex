@@ -19,8 +19,13 @@ defmodule AuctionWeb.SessionController do
     end
   end
 
+  # This will clear any cookies in the user’s browser of data that would indicate that
+  # they’re logged in to the site.
   def delete(conn, _params) do
-
+    conn
+    |> clear_session()
+    |> configure_session(drop: true)
+    |> redirect(to: Routes.item_path(conn, :index))
   end
 
 end

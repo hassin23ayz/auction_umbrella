@@ -6,10 +6,11 @@ defmodule AuctionWeb.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
-    plug :fetch_session         # session can be read from / written to
+    plug :fetch_session         # session cookie in user's browser memory can be read from / written to
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug AuctionWeb.Authenticator # custom plug module connection
   end
 
   pipeline :api do
