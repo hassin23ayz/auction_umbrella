@@ -3,7 +3,7 @@ defmodule Auction do
   # alias Auction.{Item, FakeRepo}    # multiple Alias in one line
   # @repo FakeRepo                    # denoting FaekRepo as a Module Attribute
 
-  alias Auction.{Item, User, Password}
+  alias Auction.{Item, User, Password, Bid}
   @repo Auction.Repo
   def list_items do
     # call FakeRepo Module Passing Item as first argument
@@ -61,6 +61,13 @@ defmodule Auction do
     else
       _ -> Password.dummy_verify # security reason do not let anyone know that this user is not listed
     end
+  end
+
+  # bid section
+  def insert_bid(params) do
+    %Bid{}
+    |> Bid.changeset(params)
+    |> @repo.insert()
   end
 
 end
