@@ -43,7 +43,9 @@ defmodule AuctionWeb.Router do
       :create, # [is called from :new]
       :edit,   # url usage http://localhost:4000/items/3/edit
       :update  # [is called from :edit]
-    ]
+    ] do       # as a bid belongs to an item so nested resouce routing is used
+      resources "/bids", BidController, only: [:create]
+    end
 
     resources "/users", UserController, only: [
       :new,    # url usage http://localhost:4000/users/new      [1]
