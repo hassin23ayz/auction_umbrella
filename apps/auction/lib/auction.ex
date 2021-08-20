@@ -44,6 +44,14 @@ defmodule Auction do
     |> Item.changeset()
   end
 
+  # preloading the bids and the nested users
+  # N+1 query problem prevention
+  def get_item_with_bids(id) do
+    id
+    |> get_item()
+    |> @repo.preload(bids: [:user]) # preloads the item's bids and the users of those bids
+  end
+
   # user section
   def get_user(id), do: @repo.get!(User, id)
   def new_user, do: User.changeset_with_password(%User{})

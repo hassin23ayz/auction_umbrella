@@ -6,6 +6,7 @@ defmodule Auction.Item do
     field(:title, :string)
     field(:description, :string)
     field(:ends_at, :utc_datetime)
+    has_many :bids, Auction.Bid  # :bids is the name of the association, next is the module name where the corresponding schema is defined
     timestamps()
   end
 

@@ -4,6 +4,14 @@
 <li><strong>Auction ends at:</strong> <%= @item.ends_at %></li>
 </ul>
 
+<div style="display: flex; flex-direction: row;">
+  <div style="flex: 1">
+    <h2>Current bids</h2>
+    <%= for bid <- @item.bids do %>
+      <p><%= integer_to_currency(bid.amount) %> <em>from <%= bid.user.username %></em></p>
+    <% end %>
+</div>
+
 <%= if @current_user do %>
     <h2>Place your bid!</h2>
     <%# bid after form fillup will route back to item+bid nested create option  %>
