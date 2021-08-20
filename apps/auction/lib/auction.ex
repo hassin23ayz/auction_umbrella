@@ -5,6 +5,9 @@ defmodule Auction do
 
   alias Auction.{Item, User, Password, Bid}
   @repo Auction.Repo
+
+  import Ecto.Query
+
   def list_items do
     # call FakeRepo Module Passing Item as first argument
     @repo.all(Item)
@@ -79,6 +82,18 @@ defmodule Auction do
   end
 
   def new_bid, do: Bid.changeset(%Bid{})
+
+  # this will use Ecto.Query
+  def get_bids_for_user(user) do
+    query =                           # first prepare the query
+      from b in Bid,                  # Bind the specific Database schema to a variable name
+      where: b.user_id == ^user.id,   # user id filtering
+      order_by: [desc: :inserted_at], # ordering
+      preload: :item,                 # preloading to avoid N+1 query problem
+      limit: 10                       # limit the result
+
+    @repo.all(query)                  # pass the final query
+  end
 
 end
 
