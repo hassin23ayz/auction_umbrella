@@ -69,6 +69,7 @@ defmodule AuctionWeb do
       import AuctionWeb.ErrorHelpers
       import AuctionWeb.Gettext
       alias AuctionWeb.Router.Helpers, as: Routes
+      import AuctionWeb.GlobalHelpers  # importing custom module at view folder here so that other view modules can access it commonly
     end
   end
 
