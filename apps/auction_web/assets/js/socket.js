@@ -71,7 +71,11 @@ if (match) {
     // when a msg is sent over a channel, it will contain 2 things 
     channel.on(
         "new_bid",                                                  // messeage type
-        data => { console.log("new_bid message received", data) })  // messeage body 
+        data => {                                                   // messeage body 
+            console.log("new_bid message received", data)
+            const elem = document.getElementById("bids")
+            elem.insertAdjacentHTML("afterbegin", data.body)
+        })  
 }
 
 export default socket
