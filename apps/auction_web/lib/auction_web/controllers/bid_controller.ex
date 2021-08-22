@@ -7,6 +7,14 @@ defmodule AuctionWeb.BidController do
 
     case Auction.insert_bid(%{amount: amount, item_id: item_id, user_id: user_id}) do
       {:ok, bid} ->  # 2. if bid gets entered into DB successfully then item is shown
+        # construct html page
+        html = Phoenix.View.render_to_string(AuctionWeb.BidView,
+                                            "bid.html",
+                                            bid: bid,
+                                            username: conn.assigns.current_user.username)
+        # broadcast to all the other clients(/channel sockets )
+        AuctionWeb.Endpoint.broadcast("item:#{item_id}", "new_bid", %{body: html})
+        # update frontend
         redirect(conn, to: Routes.item_path(conn, :show, bid.item_id))
 
       {:error, bid} -> # 3. if bid fails to enter DB then we go into form submission, at form submission user fills up bid and from there we again come to this create function and retry to enter into DB
