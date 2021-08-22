@@ -1,0 +1,10 @@
+<%#
+this template file's corresponding view module is BidView
+phx automatically names the assign after the View module Name .
+So in this case the assign is @bid
+%>
+
+<p>
+    <%= integer_to_currency(@bid.amount) %>
+    <em>from <%= Map.get(@bid.user, :username) || @username %></em>
+</p>
