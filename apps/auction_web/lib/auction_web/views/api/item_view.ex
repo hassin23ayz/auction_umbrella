@@ -2,15 +2,20 @@ defmodule AuctionWeb.Api.ItemView do
   use AuctionWeb, :view
 
   def render("show.json", %{item: item}) do
+    %{data: render_one(item, __MODULE__, "item.json")}
+  end
+
+  def render("index.json", %{items: items}) do
+    %{data: render_many(items, __MODULE__, "item.json")}
+  end
+
+  def render("item.json", %{item: item}) do
     %{
-      data: %{
-        type: "item",
-        id: item.id,
-        title: item.title,
-        description: item.description,
-        ends_at: item.ends_at
-      }
-    } # this map data structure will automatically get
-      # converted into valid JSON by Phx
+      type: "item",
+      id: item.id,
+      title: item.title,
+      description: item.description,
+      ends_at: item.ends_at
+    } # this map data structure will automatically get converted into valid JSON by Phx
   end
 end

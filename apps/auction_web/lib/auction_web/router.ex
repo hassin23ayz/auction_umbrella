@@ -66,6 +66,7 @@ defmodule AuctionWeb.Router do
 
     resources "/items", ItemController, only: [
       :index,                                     # get list of items and render a view to display them (render => index.json)
+                                                  # usage: http://localhost:4000/api/items
       :show                                       # get specific item by id preload the bids
                                                   # for that item and pass that item along the view     (render => show.json)
                                                   # usage: http://localhost:4000/api/items/2
