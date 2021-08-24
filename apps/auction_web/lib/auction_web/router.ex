@@ -5,7 +5,7 @@ defmodule AuctionWeb.Router do
   use AuctionWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html"]     # on client's HTTP invoke Server Returns HTML in HTTP body
     plug :fetch_session         # session cookie in user's browser memory can be read from / written to
     plug :fetch_flash
     plug :protect_from_forgery
@@ -14,7 +14,7 @@ defmodule AuctionWeb.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["json"]    # on client's HTTP invoke Server Returns json in HTTP body
   end
 
   #: this grp of routes will attempt to match all routes beginning with /
@@ -61,9 +61,16 @@ defmodule AuctionWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", AuctionWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", AuctionWeb.Api do                 # AuctionWeb.Api is a separate namespace to handle API related accesses separting from http requests
+    pipe_through :api
+
+    resources "/items", ItemController, only: [
+      :index,                                     # get list of items and render a view to display them (render => index.json)
+      :show                                       # get specific item by id preload the bids
+                                                  # for that item and pass that item along the view     (render => show.json)
+                                                  # usage: http://localhost:4000/api/items/2
+    ]
+  end
 
   # Enables LiveDashboard only for development
   #
