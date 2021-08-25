@@ -13,7 +13,7 @@ config :auction,
   ecto_repos: [Auction.Repo]
 
 config :auction, Auction.Repo,
-  database: "auction",
+  database: "auction", #apps/auction/lib/auction.ex
   username: "auction",
   password: "auction",
   hostname: "localhost",
