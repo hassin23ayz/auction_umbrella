@@ -36,4 +36,8 @@ defmodule Auction.MixProject do
       {:pbkdf2_elixir, "~> 1.4.0"}
     ]
   end
+
+  def aliases do
+    [test: ["ecto.create --quiet", "ecto.migrate", "test"]]
+  end
 end
