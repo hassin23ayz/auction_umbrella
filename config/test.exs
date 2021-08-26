@@ -12,4 +12,4 @@ config :auction, Auction.Repo,
   password: "auction",
   hostname: "localhost",
   port: "5432",
-  pool: Ecto.Adapters.SQL.Sandbox
+  pool: Ecto.Adapters.SQL.Sandbox # Sandbox is a pool of database connections <--> Tests use these connections

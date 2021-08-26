@@ -11,7 +11,8 @@ defmodule Auction.MixProject do
       lockfile: "../../mix.lock",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases() # enable alias usage at mix command
     ]
   end
 
@@ -38,6 +39,9 @@ defmodule Auction.MixProject do
   end
 
   def aliases do
+    # > mix test
+    # test:  Alias name
+    # [...]: list of commands
     [test: ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
 end
