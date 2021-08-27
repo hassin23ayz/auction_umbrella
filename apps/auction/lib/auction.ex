@@ -1,5 +1,19 @@
 # public interface to access database
 defmodule Auction do
+  @moduledoc """
+  Provides functions for interacting with the database layer of an Auction
+  application.
+  In order to keep database concerns separate from the rest of an
+  application, these
+  functions are provided. Any interaction you need to do with the database
+  can be done
+  from within these functions. See an individual function’s documentation for
+  more
+  information and usage examples (like
+  `Auction.get_user_by_username_and_password/2`).
+  """
+
+  # ...
   # alias Auction.{Item, FakeRepo}    # multiple Alias in one line
   # @repo FakeRepo                    # denoting FaekRepo as a Module Attribute
 
@@ -53,7 +67,8 @@ defmodule Auction do
     id
     |> get_item()
     |> @repo.preload(bids: from(b in Bid, order_by: [desc: b.inserted_at]))
-    |> @repo.preload(bids: [:user]) # preloads the item's bids and the users of those bids
+    # preloads the item's bids and the users of those bids
+    |> @repo.preload(bids: [:user])
   end
 
   # user section
@@ -98,7 +113,8 @@ defmodule Auction do
          true <- Password.verify_with_hash(password, user.hashed_password) do
       user
     else
-      _ -> Password.dummy_verify # security reason do not let anyone know that this user is not listed
+      # security reason do not let anyone know that this user is not listed
+      _ -> Password.dummy_verify()
     end
   end
 
@@ -113,16 +129,23 @@ defmodule Auction do
 
   # this will use Ecto.Query
   def get_bids_for_user(user) do
-    query =                           # first prepare the query
-      from b in Bid,                  # Bind the specific Database schema to a variable name
-      where: b.user_id == ^user.id,   # user id filtering
-      order_by: [desc: :inserted_at], # ordering
-      preload: :item,                 # preloading to avoid N+1 query problem
-      limit: 10                       # limit the result
+    # first prepare the query
+    # Bind the specific Database schema to a variable name
+    query =
+      from(b in Bid,
+        # user id filtering
+        where: b.user_id == ^user.id,
+        # ordering
+        order_by: [desc: :inserted_at],
+        # preloading to avoid N+1 query problem
+        preload: :item,
+        # limit the result
+        limit: 10
+      )
 
-    @repo.all(query)                  # pass the final query
+    # pass the final query
+    @repo.all(query)
   end
-
 end
 
 # usage example
