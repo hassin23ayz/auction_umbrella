@@ -1,7 +1,7 @@
 defmodule AuctionTest do
   use ExUnit.Case
   alias Auction.{Repo, Item}
-  doctest Auction
+  doctest Auction, import: true #ExUnit can test the tests embedded inside the documentation
   import Ecto.Query
 
   setup do

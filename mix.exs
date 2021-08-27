@@ -5,6 +5,7 @@ defmodule AuctionUmbrella.MixProject do
     [
       apps_path: "apps",
       version: "0.1.0",
+      name: :auction,
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -16,6 +17,10 @@ defmodule AuctionUmbrella.MixProject do
   #
   # Run "mix help deps" for examples and options.
   defp deps do
-    []
+    [
+      # exdoc is not part of the standard library
+      # dev: true means this dependency is not used in production
+      {:ex_doc, "~> 0.19", dev: true, runtime: false}
+    ]
   end
 end
