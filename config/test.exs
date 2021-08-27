@@ -7,9 +7,13 @@ config :auction_web, AuctionWeb.Endpoint,
   server: false
 
 config :auction, Auction.Repo,
-  database: "auction_test", #apps/auction/test/auction_test.ex
+  # apps/auction/test/auction_test.ex
+  database: "auction_test",
   username: "auction",
   password: "auction",
   hostname: "localhost",
   port: "5432",
-  pool: Ecto.Adapters.SQL.Sandbox # Sandbox is a pool of database connections <--> Tests use these connections
+  # Sandbox is a pool of database connections <--> Tests use these connections
+  pool: Ecto.Adapters.SQL.Sandbox
+
+config :logger, level: :info # disables debug level bug
